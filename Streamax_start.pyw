@@ -6,11 +6,6 @@ from playwright.sync_api import Playwright, expect, sync_playwright
 
 def run(playwright: Playwright):
 
-    browser = playwright.chromium.launch(
-        args=['--start-maximized'], headless=False)
-    context = browser.new_context(no_viewport=True)
-    page = context.new_page()
-
 #############################################################################################
 ########################## ВЫБОР ПУТИ ФАЙЛОВ ###################################################
 #################################################################################################
@@ -24,6 +19,13 @@ def run(playwright: Playwright):
 #################################################################################################
 ################################################################################################
 #############################################################################################
+
+    browser = playwright.chromium.launch(
+        args=['--start-maximized'], headless=False)
+    context = browser.new_context(no_viewport=True)
+    page = context.new_page()
+
+############################ НАЧАЛЬНЫЙ ЭКРАН ######################################################
 
     page.goto("http://192.168.240.1/login",
             wait_until='networkidle')
@@ -72,14 +74,17 @@ def run(playwright: Playwright):
     while True:
 
         if keyboard.is_pressed('alt+1'):
+
             c29n_upgrade()
             break
 
         elif keyboard.is_pressed('alt+q' or 'alt+й'):
+
             c29n_pass()
             break
 
         elif keyboard.is_pressed('alt+r' or 'alt+к'):
+
             context.close()
             browser.close()
             exit()
@@ -153,10 +158,12 @@ def run(playwright: Playwright):
             break
 
         elif keyboard.is_pressed('alt+w' or 'alt+ц'):
+
             terminal_pass()
             break
 
         elif keyboard.is_pressed('alt+r' or 'alt+к'):
+
             context.close()
             browser.close()
             exit()
@@ -504,6 +511,7 @@ def run(playwright: Playwright):
             break
 
         elif keyboard.is_pressed('alt+r' or 'alt+к'):
+
             context.close()
             browser.close()
             exit()
