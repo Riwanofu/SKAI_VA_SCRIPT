@@ -47,6 +47,8 @@ def run(playwright: Playwright):
 
     def c29n_upgrade():
 
+        page.reload(wait_until='domcontentloaded')
+
         page.get_by_role("link", name=" Обновить").click()
         page.wait_for_timeout(500)
 
@@ -76,7 +78,12 @@ def run(playwright: Playwright):
         if keyboard.is_pressed('alt+1'):
 
             c29n_upgrade()
-            break
+            
+            while True:
+                
+                if keyboard.is_pressed('alt+1'):
+                    continue
+                break
 
         elif keyboard.is_pressed('alt+q' or 'alt+й'):
 
@@ -150,12 +157,22 @@ def run(playwright: Playwright):
         if keyboard.is_pressed('alt+2'):
 
             m1n_upgrade()
-            break
+            
+            while True:
+                
+                if keyboard.is_pressed('alt+2'):
+                    continue
+                break
 
         elif keyboard.is_pressed('alt+3'):
 
             adplus_upgrade()
-            break
+
+            while True:
+                
+                if keyboard.is_pressed('alt+3'):
+                    continue
+                break
 
         elif keyboard.is_pressed('alt+w' or 'alt+ц'):
 
@@ -289,7 +306,7 @@ def run(playwright: Playwright):
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
 
-        keyboard.wait('alt+3')
+        keyboard.wait('alt+4')
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -317,11 +334,6 @@ def run(playwright: Playwright):
                 wait_until='domcontentloaded')
 
         page.locator("#play9").click()
-
-        keyboard.wait('alt+3')
-        context.close()
-        browser.close()
-        exit()
 
 ########################### ПРОФИЛЬ 5 КАНАЛ #######################################################
 
@@ -462,7 +474,7 @@ def run(playwright: Playwright):
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 5 КАНАЛА ####################
 
-        keyboard.wait('alt+4')
+        keyboard.wait('alt+5')
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -491,24 +503,29 @@ def run(playwright: Playwright):
 
         page.locator("#play9").click()
 
-        keyboard.wait('alt+4')
-        context.close()
-        browser.close()
-        exit()
-
     #################### ЛОГИКА РАБОТЫ БЛОКА ####################
 
     while True:
 
-        if keyboard.is_pressed('alt+3'):
+        if keyboard.is_pressed('alt+4'):
 
             config_3_channel()
-            break
+            
+            while True:
+                
+                if keyboard.is_pressed('alt+4'):
+                    continue
+                break
 
-        elif keyboard.is_pressed('alt+4'):
+        elif keyboard.is_pressed('alt+5'):
 
             config_5_channel()
-            break
+            
+            while True:
+                
+                if keyboard.is_pressed('alt+5'):
+                    continue
+                break
 
         elif keyboard.is_pressed('alt+r' or 'alt+к'):
 
