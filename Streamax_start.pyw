@@ -1,22 +1,25 @@
 ##################### IVANOV STREAMAX SCRIPT ######################################################
 
+#################### ИМПОРТ БИБЛИОТЕК ДЛЯ РАБОТЫ СКРИПТА ####################
+
 import keyboard
 from playwright.sync_api import Playwright, expect, sync_playwright
 
+#################### ПЕРЕМЕННАЯ ДЛЯ ИНИЦИАЛИЗАЦИИ ####################
 
 def run(playwright: Playwright):
 
 #############################################################################################
 ########################## ВЫБОР ПУТИ ФАЙЛОВ ###################################################
-#################################################################################################
-                                                                                        ##########
-    c29n = 'C:\\скрипт\\камера'                                                         ###########
-    m1n = 'C:\\скрипт\\прошивка'                                                        ###########
-    adplus = 'C:\\скрипт\\прошивка'                                                     ###########
-    config_3_ch = 'C:\\скрипт\\профиль'                                                 ###########
-    config_5_ch = 'C:\\скрипт\\профиль'                                                 ###########
-                                                                                        ##########
-#################################################################################################
+#################################################################################################                   #
+                                                                                        ##########                ###
+    c29n = 'C:\\скрипт\\камера'                                                         ###########             #####
+    m1n = 'C:\\скрипт\\прошивка'                                                        ###########          #############################
+    adplus = 'C:\\скрипт\\прошивка'                                                     ###########        #### СЮДА ВПИСАТЬ ПУТЬ ФАЙЛА ##
+    config_3_ch = 'C:\\скрипт\\профиль'                                                 ###########          #############################
+    config_5_ch = 'C:\\скрипт\\профиль'                                                 ###########             #####
+                                                                                        ##########                ###
+#################################################################################################                   #
 ################################################################################################
 #############################################################################################
 
@@ -45,12 +48,16 @@ def run(playwright: Playwright):
 
 ############################ ОБНОВЛЕНИЕ КАМЕРЫ C29N ###############################################
 
+    #################### ВЫБОР ПРОШИВКИ C29N ####################
+
     def c29n_upgrade():
 
         page.reload(wait_until='domcontentloaded')
 
         page.get_by_role("link", name=" Обновить").click()
         page.wait_for_timeout(500)
+
+        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
 
         page.locator("#file_path_IPC_UPGRADE").click()
         with page.expect_file_chooser() as fc_info_c29n:
@@ -112,6 +119,8 @@ def run(playwright: Playwright):
 
         page.locator("#file_path_remote_upgrade_device").click()
 
+        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
+
         with page.expect_file_chooser() as fc_info_terminal:
             page.locator("#upgrade div").filter(
                 has_text="Обновление устройстваПросматриватьОбновить").locator("span").click()
@@ -135,6 +144,8 @@ def run(playwright: Playwright):
         page.wait_for_timeout(500)
 
         page.locator("#file_path_remote_upgrade_device").click()
+
+        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
 
         with page.expect_file_chooser() as fc_info_terminal:
             page.locator("#upgrade div").filter(
@@ -199,9 +210,9 @@ def run(playwright: Playwright):
             "link", name=" Конфигурация").click()
         page.wait_for_timeout(500)
 
-        #################### ВЫБОР ПРОФИЛЯ ####################
-
         page.locator("#file_path_pc_import_param").click()
+
+        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
 
         with page.expect_file_chooser() as fc_info_3:
             page.locator("#parameter div").filter(
@@ -214,7 +225,7 @@ def run(playwright: Playwright):
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
         page.get_by_role("button", name="OK").click()
 
-        #################### УДАЛЕНИЕ ЛИШНИХ КАНАЛОВ КРОМЕ 3 ####################
+        #################### ВХОД В НАСТРОЙКИ IPC ####################
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -227,7 +238,7 @@ def run(playwright: Playwright):
         page.get_by_role(
             "button", name="По умолчанию").click()
 
-        #################### ВКЛ 3 ДЛЯ КАЛИБРОВКИ ####################
+        #################### НАСТРОЙКА И ВЫКЛ 3 CH ДЛЯ КАЛИБРОВКИ ####################
 
         page.get_by_role(
             "row", name="3  ").locator("label").first.click()
@@ -286,6 +297,8 @@ def run(playwright: Playwright):
         page.get_by_role(
             "button", name="Сохранить").click()
         page.get_by_role("button", name="OK").click()
+
+        #################### ВКЛЮЧЕНИЕ 3 КАНАЛА ДЛЯ КАЛИБРОВКИ ####################
 
         page.get_by_role(
             "link", name="Наблюдение").click()
@@ -348,9 +361,9 @@ def run(playwright: Playwright):
             "link", name=" Конфигурация").click()
         page.wait_for_timeout(500)
 
-        #################### ВЫБОР ПРОФИЛЯ ####################
-
         page.locator("#file_path_pc_import_param").click()
+
+        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
 
         with page.expect_file_chooser() as fc_info_5:
             page.locator(
@@ -364,7 +377,7 @@ def run(playwright: Playwright):
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
         page.get_by_role("button", name="OK").click()
 
-        #################### УДАЛЕНИЕ ЛИШНИХ КАНАЛОВ КРОМЕ 5 ####################
+        #################### ВХОД В НАСТРОЙКИ IPC ####################
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -377,7 +390,7 @@ def run(playwright: Playwright):
         page.get_by_role(
             "button", name="По умолчанию").click()
 
-        #################### ВКЛ 5 ДЛЯ КАЛИБРОВКИ ####################
+        #################### НАСТРОЙКА И ВЫКЛ 5 CH ДЛЯ КАЛИБРОВКИ ####################
 
         page.get_by_role(
             "row", name="5  ").locator("label").first.click()
@@ -454,6 +467,8 @@ def run(playwright: Playwright):
         page.get_by_role(
             "button", name="Сохранить").click()
         page.get_by_role("button", name="OK").click()
+
+        #################### ВКЛЮЧЕНИЕ 5 КАНАЛА ДЛЯ КАЛИБРОВКИ ####################
 
         page.get_by_role(
             "link", name="Наблюдение").click()
@@ -534,6 +549,7 @@ def run(playwright: Playwright):
             exit()
             break
 
+##################### ИНИЦИАЦИЯ ВКЛЮЧЕНИЯ КОДА ####################################################
 
 with sync_playwright() as playwright:
     run(playwright)
