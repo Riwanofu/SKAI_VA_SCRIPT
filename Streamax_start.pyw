@@ -138,7 +138,8 @@ def run(playwright: Playwright):
 
     def adplus_upgrade():
 
-        page.reload(wait_until='domcontentloaded')
+        page.goto('http://192.168.240.1/pages/maintenance',
+            wait_until='domcontentloaded')
 
         expect(page.locator(
             "#maintenance_left_menu")).to_contain_text("Обновить")
