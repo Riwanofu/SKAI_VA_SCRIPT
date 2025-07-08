@@ -1,4 +1,4 @@
-##################### IVANOV STREAMAX SCRIPT ######################################################
+########################### STREAMAX SCRIPT #######################################################
 
 #################### ИМПОРТ БИБЛИОТЕК ДЛЯ РАБОТЫ СКРИПТА ####################
 
@@ -9,19 +9,16 @@ from playwright.sync_api import Playwright, expect, sync_playwright
 
 def run(playwright: Playwright):
 
-        ##################################################################################
-    ###################### ВЫБОР ПУТЕЙ ФАЙЛОВ ###############################################
-###############################################################################################                   #
-                                                                                        #########              ####
-    c29n = 'C:\\скрипт\\ST_C29N V3.3.28_RC24031970'                                     ##########         ########
-    m1n = 'C:\\скрипт\\HY_X1N_AI_M0010_V3.5.8.16_RC24082970'                            ###########      ###############################
-    adplus = 'C:\\скрипт\\ADPLUS2.0_V3.5.8.9_T240426.71_M0010'                          ###########   #### СЮДА ВПИСАТЬ ПУТИ ФАЙЛОВ ####
-    config_3_ch = 'C:\\скрипт\\config'                                                  ###########      ###############################
-    config_5_ch = 'C:\\скрипт\\config'                                                  ##########         ########
-                                                                                        #########              ####
-###############################################################################################                   #
-    #########################################################################################
-        ##################################################################################
+##########################################################################
+########################## ВЫБОР ПУТЕЙ ФАЙЛОВ ###############################
+                                                                    ###########
+    c29n = 'C:\\скрипт\\ST_C29N V3.3.28_RC24031970'               #### СЮДА #####
+    m1n = 'C:\\скрипт\\HY_X1N_AI_M0010_V3.5.8.16_RC24082970'    ##### ВПИСАТЬ #####
+    adplus = 'C:\\скрипт\\ADPLUS2.0_V3.5.8.9_T240426.71_M0010'  ###### ПУТИ #######
+    config_ch = 'C:\\скрипт\\config'                              ### ФАЙЛОВ ####
+                                                                    ###########
+#############################################################################
+##########################################################################
 
     browser = playwright.chromium.launch(
         args=['--start-maximized'], headless=False)
@@ -54,6 +51,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/maintenance',
             wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.get_by_role("link", name=" Обновить").click()
         page.wait_for_timeout(500)
@@ -113,9 +111,8 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/maintenance',
             wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
-        expect(page.locator(
-            "#maintenance_left_menu")).to_contain_text("Обновить")
         page.get_by_role("link", name=" Обновить").click()
         page.wait_for_timeout(500)
 
@@ -140,9 +137,8 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/maintenance',
             wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
-        expect(page.locator(
-            "#maintenance_left_menu")).to_contain_text("Обновить")
         page.get_by_role("link", name=" Обновить").click()
         page.wait_for_timeout(500)
 
@@ -206,9 +202,8 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/maintenance',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
-        expect(page.locator(
-            "#maintenance_left_menu")).to_contain_text("Конфигурация")
         page.get_by_role(
             "link", name=" Конфигурация").click()
         page.wait_for_timeout(500)
@@ -222,7 +217,7 @@ def run(playwright: Playwright):
                 has_text="Импортировать параметрыПросматриватьИмпорт").locator("span").click()
 
         file_config_3 = fc_info_3.value
-        file_config_3.set_files(config_3_ch)
+        file_config_3.set_files(config_ch)
 
         page.locator("#parameter div").filter(
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
@@ -232,6 +227,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.get_by_role(
             "link", name="Наблюдение").click()
@@ -265,13 +261,30 @@ def run(playwright: Playwright):
 
         page.locator(
             "#ipc_start_address").fill("1")
+        
+        page.get_by_role(
+            "button", name="Сохранить").click()
+        page.get_by_role(
+            "button", name="OK").click()
+
+        page.get_by_role(
+            "row", name="3 10.100.100.100:9006:1  ").locator("label").first.click()
+
+        page.get_by_role(
+            "button", name="Сохранить").click()
+        page.get_by_role(
+            "button", name="OK").click()
+        page.wait_for_timeout(100)
+
+        page.get_by_role(
+            "row", name="3 10.100.100.100:9006:1  ").locator("label").first.click()
 
         page.get_by_role(
             "button", name="Сохранить").click()
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
+        page.wait_for_timeout(140)
 
         #################### КАЛИБРОВКА 3 КАНАЛА ####################
 
@@ -279,11 +292,12 @@ def run(playwright: Playwright):
             "link", name="Тревога").click()
         page.get_by_role(
             "link", name=" AI приложение").click()
+        page.wait_for_timeout(140)
         expect(page.get_by_role(
             "listitem").filter(has_text="Алгоритм калибр")).to_be_visible()
         page.get_by_role(
             "listitem").filter(has_text="Алгоритм калибр").click()
-        page.wait_for_timeout(120)
+        page.wait_for_timeout(140)
 
         page.get_by_role(
             "row", name="3").locator("input[name=\"use\"]").click()
@@ -315,9 +329,11 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/preview',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.locator(
             "#player").get_by_text("3").dblclick()
+        page.locator("#soundValue").click()
         page.locator("#volume").click()
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
@@ -326,6 +342,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.get_by_role(
             "link", name="Тревога").click()
@@ -348,6 +365,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/preview',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.locator("#play9").click()
 
@@ -357,9 +375,8 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/maintenance',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
-        expect(page.locator(
-            "#maintenance_left_menu")).to_contain_text("Конфигурация")
         page.get_by_role(
             "link", name=" Конфигурация").click()
         page.wait_for_timeout(500)
@@ -374,7 +391,7 @@ def run(playwright: Playwright):
                     has_text="Импортировать параметрыПросматриватьИмпорт").locator("span").click()
 
         file_config_5 = fc_info_5.value
-        file_config_5.set_files(config_5_ch)
+        file_config_5.set_files(config_ch)
 
         page.locator("#parameter div").filter(
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
@@ -384,6 +401,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.get_by_role(
             "link", name="Наблюдение").click()
@@ -441,7 +459,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
+        page.wait_for_timeout(140)
 
         #################### КАЛИБРОВКА 5 КАНАЛА ####################
 
@@ -449,11 +467,12 @@ def run(playwright: Playwright):
             "link", name="Тревога").click()
         page.get_by_role(
             "link", name=" AI приложение").click()
+        page.wait_for_timeout(140)
         expect(page.get_by_role(
             "listitem").filter(has_text="Алгоритм калибр")).to_be_visible()
         page.get_by_role(
             "listitem").filter(has_text="Алгоритм калибр").click()
-        page.wait_for_timeout(120)
+        page.wait_for_timeout(140)
 
         page.get_by_role(
             "row", name="5").locator("input[name=\"use\"]").click()
@@ -485,9 +504,11 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/preview',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.locator(
             "#player").get_by_text("5").dblclick()
+        page.locator("#soundValue").click()
         page.locator("#volume").click()
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 5 КАНАЛА ####################
@@ -496,6 +517,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.get_by_role(
             "link", name="Тревога").click()
@@ -518,6 +540,7 @@ def run(playwright: Playwright):
 
         page.goto('http://192.168.240.1/pages/preview',
                 wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
 
         page.locator("#play9").click()
 
