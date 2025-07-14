@@ -3,6 +3,7 @@
 #################### ИМПОРТ БИБЛИОТЕК ДЛЯ РАБОТЫ СКРИПТА ####################
 
 import keyboard
+import re
 from playwright.sync_api import Playwright, expect, sync_playwright
 
 #################### ПЕРЕМЕННАЯ ДЛЯ ИНИЦИАЛИЗАЦИИ ####################
@@ -40,8 +41,8 @@ def run(playwright: Playwright):
     page.locator("#password").press("Enter")
     page.wait_for_timeout(110)
 
-    page.goto('http://192.168.240.1/pages/preview',
-            wait_until='domcontentloaded')
+    page.locator("div").filter(
+        has_text=re.compile(r"^Прямая трансляция$")).click()
 
 ############################ ОБНОВЛЕНИЕ КАМЕРЫ C29N ###############################################
 
@@ -367,8 +368,6 @@ def run(playwright: Playwright):
                 wait_until='domcontentloaded')
         page.wait_for_timeout(100)
 
-        page.locator("#play9").click()
-
 ########################### ПРОФИЛЬ 5 КАНАЛ #######################################################
 
     def config_5_channel():
@@ -542,8 +541,165 @@ def run(playwright: Playwright):
                 wait_until='domcontentloaded')
         page.wait_for_timeout(100)
 
-        page.locator("#play9").click()
+########################### ПРОФИЛЬ ДЛЯ АДПЛЮСА ###################################################
 
+    def config_for_ad():
+
+        page.goto('http://192.168.240.1/pages/maintenance',
+                wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+
+        page.get_by_role(
+            "link", name=" Конфигурация").click()
+
+        page.locator("#parameter div").filter(
+            has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
+        page.get_by_role("button", name="OK").click()
+
+        #################### ВХОД В НАСТРОЙКИ IPC ####################
+
+        page.goto('http://192.168.240.1/pages/config',
+                wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+
+        page.get_by_role(
+            "link", name="Наблюдение").click()
+        page.get_by_role(
+            "link", name=" Настройка IPC").click()
+
+        page.get_by_role(
+            "button", name="По умолчанию").click()
+
+        #################### НАСТРОЙКА И ВЫКЛ 3 CH ДЛЯ КАЛИБРОВКИ ####################
+
+        page.get_by_role(
+            "row", name="3  ").locator("label").first.click()
+
+        page.get_by_role(
+            "button", name="").nth(2).click()
+        page.locator("span").filter(
+            has_text="По умолчаниюDSMMDVR").locator("span").click()
+
+        page.get_by_role(
+            "link", name="DSM").click()
+        page.wait_for_timeout(100)
+        page.locator(
+            "#edit_ip_address").fill("10.100.100.100")
+        page.get_by_role(
+            "button", name="OK").click()
+        page.wait_for_timeout(100)
+
+        page.get_by_role(
+            "row", name="10.100.100.100:9006:1  ").locator("span").first.click()
+
+        page.locator(
+            "#ipc_start_address").fill("1")
+        
+        page.get_by_role(
+            "button", name="Сохранить").click()
+        page.get_by_role(
+            "button", name="OK").click()
+
+        page.get_by_role(
+            "row", name="3 10.100.100.100:9006:1  ").locator("label").first.click()
+
+        page.get_by_role(
+            "button", name="Сохранить").click()
+        page.get_by_role(
+            "button", name="OK").click()
+        page.wait_for_timeout(100)
+
+        page.get_by_role(
+            "row", name="3 10.100.100.100:9006:1  ").locator("label").first.click()
+
+        page.get_by_role(
+            "button", name="Сохранить").click()
+
+        page.goto('http://192.168.240.1/pages/config',
+                wait_until='domcontentloaded')
+        page.wait_for_timeout(140)
+
+        #################### КАЛИБРОВКА 3 КАНАЛА ####################
+
+        page.get_by_role(
+            "link", name="Тревога").click()
+        page.get_by_role(
+            "link", name=" AI приложение").click()
+        page.wait_for_timeout(140)
+        expect(page.get_by_role(
+            "listitem").filter(has_text="Алгоритм калибр")).to_be_visible()
+        page.get_by_role(
+            "listitem").filter(has_text="Алгоритм калибр").click()
+        page.wait_for_timeout(140)
+
+        page.get_by_role(
+            "row", name="3").locator("input[name=\"use\"]").click()
+        page.locator(
+            "#calibration_list").get_by_role("link", name="DMS").click()
+        page.get_by_role(
+            "row", name="DMS").locator("input[name=\"mode\"]").click()
+        page.get_by_role(
+            "link", name="Калибровка").click()
+        page.get_by_role(
+            "cell", name="Калибровка").locator("span").nth(3).click()
+        page.get_by_role(
+            "link", name="Side").click()
+        page.get_by_role(
+            "button", name="Сохранить").click()
+        page.get_by_role("button", name="OK").click()
+
+        #################### ВКЛЮЧЕНИЕ 3 КАНАЛА ДЛЯ КАЛИБРОВКИ ####################
+
+        page.get_by_role(
+            "link", name="Наблюдение").click()
+        page.get_by_role(
+            "link", name=" Настройка IPC").click()
+
+        page.get_by_role(
+            "row", name="10.100.100.100:9006:1  ").locator("label").first.click()
+        page.get_by_role(
+            "button", name="Сохранить").click()
+
+        page.goto('http://192.168.240.1/pages/preview',
+                wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+
+        page.locator(
+            "#player").get_by_text("3").dblclick()
+        page.locator("#soundValue").click()
+        page.locator("#volume").click()
+
+        #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
+
+        keyboard.wait('alt+0')
+
+        page.goto('http://192.168.240.1/pages/config',
+                wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+
+        page.get_by_role(
+            "link", name="Тревога").click()
+        page.get_by_role(
+            "link", name=" AI приложение").click()
+        expect(page.get_by_role(
+            "listitem").filter(has_text="Алгоритм калибр")).to_be_visible()
+        page.get_by_role(
+            "listitem").filter(has_text="Алгоритм калибр").click()
+        page.wait_for_timeout(120)
+
+        page.get_by_role(
+            "cell", name="Калибровка Side").locator("input[name=\"mode\"]").click()
+        page.get_by_role(
+            "link", name="Нормально").click()
+        page.get_by_role(
+            "button", name="Сохранить").click()
+
+        #################### ПРОСМОТР 3 КАНАЛА + ОСТ. КАМЕРЫ ####################
+
+        page.goto('http://192.168.240.1/pages/preview',
+                wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+    
     #################### ЛОГИКА РАБОТЫ БЛОКА ####################
 
     while True:
@@ -565,6 +721,16 @@ def run(playwright: Playwright):
             while True:
                 
                 if keyboard.is_pressed('alt+5'):
+                    continue
+                break
+
+        elif keyboard.is_pressed('alt+0'):
+
+            config_for_ad()
+            
+            while True:
+                
+                if keyboard.is_pressed('alt+0'):
                     continue
                 break
 
