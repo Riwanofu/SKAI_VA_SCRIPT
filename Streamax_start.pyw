@@ -334,7 +334,6 @@ def run(playwright: Playwright):
 
         page.locator(
             "#player").get_by_text("3").dblclick()
-        page.locator("#soundValue").click()
         page.locator("#volume").click()
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
@@ -507,7 +506,6 @@ def run(playwright: Playwright):
 
         page.locator(
             "#player").get_by_text("5").dblclick()
-        page.locator("#soundValue").click()
         page.locator("#volume").click()
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 5 КАНАЛА ####################
@@ -666,7 +664,6 @@ def run(playwright: Playwright):
 
         page.locator(
             "#player").get_by_text("3").dblclick()
-        page.locator("#soundValue").click()
         page.locator("#volume").click()
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
