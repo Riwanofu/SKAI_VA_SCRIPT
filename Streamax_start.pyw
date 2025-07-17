@@ -30,6 +30,7 @@ def run(playwright: Playwright):
 
     page.goto("http://192.168.240.1/login",
             wait_until='networkidle')
+    page.wait_for_timeout(100)
 
     page.locator("span").filter(
         has_text="中文（简体）EnglishPortuguêsEspañol").click()
@@ -39,10 +40,25 @@ def run(playwright: Playwright):
     page.locator("#password").fill("admin")
 
     page.locator("#password").press("Enter")
-    page.wait_for_timeout(110)
+    page.wait_for_timeout(130)
 
     page.goto("http://192.168.240.1/pages/preview",
             wait_until='domcontentloaded')
+
+    def main_menu():
+
+        page.goto("http://192.168.240.1",
+            wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+        
+        page.locator("div").filter(
+            has_text=re.compile(r"^Обслуживание$")).click()
+        page.wait_for_timeout(100)
+        page.locator("iframe").content_frame.get_by_role(
+            "link", name=" Конфигурация").click()
+        
+    def pass_anything():
+        pass
 
 ############################ ОБНОВЛЕНИЕ КАМЕРЫ C29N ###############################################
 
@@ -75,19 +91,6 @@ def run(playwright: Playwright):
             "#edit_ipc_dialog_modal").get_by_role("button", name="Обновить").click()
         page.get_by_role("button", name=" Ok").click()
 
-    def c29n_pass():
-        pass
-
-    def main_menu():
-
-        page.goto("http://192.168.240.1",
-            wait_until='domcontentloaded')
-        
-        page.locator("div").filter(
-            has_text=re.compile(r"^Обслуживание$")).click()
-        page.locator("iframe").content_frame.get_by_role(
-            "link", name=" Конфигурация").click()
-
     #################### ЛОГИКА РАБОТЫ БЛОКА ####################
 
     while True:
@@ -104,7 +107,7 @@ def run(playwright: Playwright):
 
         elif keyboard.is_pressed('alt+q' or 'alt+й'):
 
-            c29n_pass()
+            pass_anything()
             break
 
         elif keyboard.is_pressed('alt+a' or 'alt+ф'):
@@ -147,6 +150,7 @@ def run(playwright: Playwright):
 
         file_terminal = fc_info_terminal.value
         file_terminal.set_files(m1n)
+        page.wait_for_timeout(50)
 
         page.locator("#upgrade div").filter(
             has_text="Обновление устройстваПросматриватьОбновить").get_by_role("button").click()
@@ -173,23 +177,11 @@ def run(playwright: Playwright):
 
         file_terminal = fc_info_terminal.value
         file_terminal.set_files(adplus)
+        page.wait_for_timeout(50)
 
         page.locator("#upgrade div").filter(
             has_text="Обновление устройстваПросматриватьОбновить").get_by_role("button").click()
         page.get_by_role("button", name=" Ok").click()
-
-    def terminal_pass():
-        pass
-
-    def main_menu():
-
-        page.goto("http://192.168.240.1",
-            wait_until='domcontentloaded')
-        
-        page.locator("div").filter(
-            has_text=re.compile(r"^Обслуживание$")).click()
-        page.locator("iframe").content_frame.get_by_role(
-            "link", name=" Конфигурация").click()
 
     #################### ЛОГИКА РАБОТЫ БЛОКА ####################
 
@@ -217,7 +209,7 @@ def run(playwright: Playwright):
 
         elif keyboard.is_pressed('alt+w' or 'alt+ц'):
 
-            terminal_pass()
+            pass_anything()
             break
 
         elif keyboard.is_pressed('alt+a' or 'alt+ф'):
@@ -259,6 +251,7 @@ def run(playwright: Playwright):
 
         file_config_3 = fc_info_3.value
         file_config_3.set_files(config_ch)
+        page.wait_for_timeout(50)
 
         page.locator("#parameter div").filter(
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
@@ -380,7 +373,7 @@ def run(playwright: Playwright):
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
 
-        keyboard.wait('alt+4')
+        keyboard.read_key()
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -388,6 +381,7 @@ def run(playwright: Playwright):
 
         page.get_by_role(
             "link", name="Тревога").click()
+        page.wait_for_timeout(100)
         page.get_by_role(
             "link", name=" AI приложение").click()
         expect(page.get_by_role(
@@ -432,6 +426,7 @@ def run(playwright: Playwright):
 
         file_config_5 = fc_info_5.value
         file_config_5.set_files(config_ch)
+        page.wait_for_timeout(50)
 
         page.locator("#parameter div").filter(
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
@@ -554,7 +549,7 @@ def run(playwright: Playwright):
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 5 КАНАЛА ####################
 
-        keyboard.wait('alt+5')
+        keyboard.read_key()
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -562,6 +557,7 @@ def run(playwright: Playwright):
 
         page.get_by_role(
             "link", name="Тревога").click()
+        page.wait_for_timeout(100)
         page.get_by_role(
             "link", name=" AI приложение").click()
         expect(page.get_by_role(
@@ -605,6 +601,7 @@ def run(playwright: Playwright):
 
         file_config_6 = fc_info_6.value
         file_config_6.set_files(config_ch)
+        page.wait_for_timeout(50)
 
         page.locator("#parameter div").filter(
             has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
@@ -726,7 +723,7 @@ def run(playwright: Playwright):
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 6 КАНАЛА ####################
 
-        keyboard.wait('alt+6')
+        keyboard.read_key()
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -734,6 +731,7 @@ def run(playwright: Playwright):
 
         page.get_by_role(
             "link", name="Тревога").click()
+        page.wait_for_timeout(100)
         page.get_by_role(
             "link", name=" AI приложение").click()
         expect(page.get_by_role(
@@ -755,9 +753,9 @@ def run(playwright: Playwright):
                 wait_until='domcontentloaded')
         page.wait_for_timeout(100)
 
-################# ПРОФИЛЬ ДЛЯ АДПЛЮСА (3 канал без загрузки профиля) ##############################
+############################# ПРОФИЛЬ ДЛЯ КАЛИБРОВКИ БЕЗ ПРОФИЛЯ ##################################
 
-    def config_for_ad():
+    def config_free_ch():
 
         page.goto('http://192.168.240.1/pages/maintenance',
                 wait_until='domcontentloaded')
@@ -886,7 +884,7 @@ def run(playwright: Playwright):
 
         #################### ВЫКЛЮЧЕНИЕ КАЛИБРОВКИ 3 КАНАЛА ####################
 
-        keyboard.wait('alt+0')
+        keyboard.read_key()
 
         page.goto('http://192.168.240.1/pages/config',
                 wait_until='domcontentloaded')
@@ -894,6 +892,7 @@ def run(playwright: Playwright):
 
         page.get_by_role(
             "link", name="Тревога").click()
+        page.wait_for_timeout(100)
         page.get_by_role(
             "link", name=" AI приложение").click()
         expect(page.get_by_role(
@@ -914,16 +913,6 @@ def run(playwright: Playwright):
         page.goto('http://192.168.240.1/pages/preview',
                 wait_until='domcontentloaded')
         page.wait_for_timeout(100)
-
-    def main_menu():
-
-        page.goto("http://192.168.240.1",
-            wait_until='domcontentloaded')
-        
-        page.locator("div").filter(
-            has_text=re.compile(r"^Обслуживание$")).click()
-        page.locator("iframe").content_frame.get_by_role(
-            "link", name=" Конфигурация").click()
     
     #################### ЛОГИКА РАБОТЫ БЛОКА ####################
 
@@ -961,7 +950,7 @@ def run(playwright: Playwright):
         
         elif keyboard.is_pressed('alt+0'):
 
-            config_for_ad()
+            config_free_ch()
             
             while True:
                 
