@@ -14,9 +14,9 @@ def run(playwright: Playwright):
 ########################## ВЫБОР ПУТЕЙ ФАЙЛОВ ###############################
                                                                     ###########
     c29n = 'C:\\скрипт\\ST_C29N V3.3.28_RC24031970'               #### СЮДА #####
-    m1n = 'C:\\скрипт\\HY_X1N_AI_M0010_V3.5.8.16_RC24082970'    ##### ВПИСАТЬ #####
+    m1n = 'C:\скрипт\HY_X1N_AI_M0010_V3.5.8 2-3819731810665889796.20_r25032404'    ##### ВПИСАТЬ #####
     adplus = 'C:\\скрипт\\ADPLUS2.0_V3.5.8.9_T240426.71_M0010'  ###### ПУТИ #######
-    config_ch = 'C:\\скрипт\\config'                              ### ФАЙЛОВ ####
+    config_ch = 'C:\\скрипт\\config AD Plus ГПН-БРД'                              ### ФАЙЛОВ ####
                                                                     ###########
 #############################################################################
 ##########################################################################
@@ -25,6 +25,22 @@ def run(playwright: Playwright):
         args=['--start-maximized'], headless=False)
     context = browser.new_context(no_viewport=True)
     page = context.new_page()
+
+    def main_menu():
+
+        page.goto("http://192.168.240.1",
+            wait_until='domcontentloaded')
+        page.wait_for_timeout(100)
+        
+        page.locator("div").filter(
+            has_text=re.compile(r"^Обслуживание$")).click()
+        page.wait_for_timeout(100)
+        page.locator("iframe").content_frame.get_by_role(
+            "link", name=" Конфигурация").click()
+        pass
+        
+    def pass_anything():
+        pass
 
 ############################ НАЧАЛЬНЫЙ ЭКРАН ######################################################
 
@@ -44,21 +60,6 @@ def run(playwright: Playwright):
 
     page.goto("http://192.168.240.1/pages/preview",
             wait_until='domcontentloaded')
-
-    def main_menu():
-
-        page.goto("http://192.168.240.1",
-            wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
-        
-        page.locator("div").filter(
-            has_text=re.compile(r"^Обслуживание$")).click()
-        page.wait_for_timeout(100)
-        page.locator("iframe").content_frame.get_by_role(
-            "link", name=" Конфигурация").click()
-        
-    def pass_anything():
-        pass
 
 ############################ ОБНОВЛЕНИЕ КАМЕРЫ C29N ###############################################
 
