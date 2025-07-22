@@ -233,7 +233,7 @@ def run(playwright: Playwright):
 
 ########################### ПРОФИЛЬ 3 КАНАЛ #######################################################
 
-    def config_3_channel():
+    def config_terminal():
 
         page.goto('http://192.168.240.1/pages/maintenance',
                 wait_until='domcontentloaded')
@@ -245,24 +245,24 @@ def run(playwright: Playwright):
 
         #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
 
-        with page.expect_file_chooser() as fc_info_3:
+        with page.expect_file_chooser() as fc_info_1:
             page.locator("#parameter div").filter(
                 has_text="Импорт параметров DMSПросматриватьИмпорт").locator("span").click()
 
-        file_config_3 = fc_info_3.value
-        file_config_3.set_files(config_ch)
+        file_config_1 = fc_info_1.value
+        file_config_1.set_files(config_ch)
         page.wait_for_timeout(25)
 
         page.locator("#parameter div").filter(
             has_text="Импорт параметров DMSПросматриватьИмпорт").get_by_role("button").click()
         page.get_by_role("button", name="OK").click()
 
-        with page.expect_file_chooser() as fc_info_3:
+        with page.expect_file_chooser() as fc_info_1:
             page.locator("#parameter div").filter(
                 has_text="Импортировать параметрыПросматриватьИмпорт").locator("span").click()
 
-        file_config_3 = fc_info_3.value
-        file_config_3.set_files(config_ch)
+        file_config_1 = fc_info_1.value
+        file_config_1.set_files(config_ch)
         page.wait_for_timeout(25)
 
         page.locator("#parameter div").filter(
@@ -275,125 +275,17 @@ def run(playwright: Playwright):
 
         page.locator("#volume").click()
 
-########################### ПРОФИЛЬ 5 КАНАЛ #######################################################
-
-    def config_5_channel():
-
-        page.goto('http://192.168.240.1/pages/maintenance',
-                wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
-
-        page.get_by_role(
-            "link", name=" Конфигурация").click()
-        page.wait_for_timeout(480)
-
-        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
-
-        with page.expect_file_chooser() as fc_info_5:
-            page.locator("#parameter div").filter(
-                has_text="Импорт параметров DMSПросматриватьИмпорт").locator("span").click()
-
-        file_config_5 = fc_info_5.value
-        file_config_5.set_files(config_ch)
-        page.wait_for_timeout(25)
-
-        page.locator("#parameter div").filter(
-            has_text="Импорт параметров DMSПросматриватьИмпорт").get_by_role("button").click()
-        page.get_by_role("button", name="OK").click()
-
-        with page.expect_file_chooser() as fc_info_5:
-            page.locator("#parameter div").filter(
-                has_text="Импортировать параметрыПросматриватьИмпорт").locator("span").click()
-
-        file_config_5 = fc_info_5.value
-        file_config_5.set_files(config_ch)
-        page.wait_for_timeout(25)
-
-        page.locator("#parameter div").filter(
-            has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
-        page.get_by_role("button", name="OK").click()
-
-        page.goto('http://192.168.240.1/pages/preview',
-                wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
-
-        page.locator("#volume").click()
-
-########################### ПРОФИЛЬ 6 КАНАЛ #######################################################
-
-    def config_6_channel():
-
-        page.goto('http://192.168.240.1/pages/maintenance',
-                wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
-
-        page.get_by_role(
-            "link", name=" Конфигурация").click()
-        page.wait_for_timeout(480)
-
-        #################### ПОДГРУЗКА ФАЙЛА ИЗ СКРЫТОГО ПРОВОДНИКА ####################
-
-        with page.expect_file_chooser() as fc_info_6:
-            page.locator("#parameter div").filter(
-                has_text="Импорт параметров DMSПросматриватьИмпорт").locator("span").click()
-
-        file_config_6 = fc_info_6.value
-        file_config_6.set_files(config_ch)
-        page.wait_for_timeout(25)
-
-        page.locator("#parameter div").filter(
-            has_text="Импорт параметров DMSПросматриватьИмпорт").get_by_role("button").click()
-        page.get_by_role("button", name="OK").click()
-
-        with page.expect_file_chooser() as fc_info_6:
-            page.locator("#parameter div").filter(
-                has_text="Импортировать параметрыПросматриватьИмпорт").locator("span").click()
-
-        file_config_6 = fc_info_6.value
-        file_config_6.set_files(config_ch)
-        page.wait_for_timeout(25)
-
-        page.locator("#parameter div").filter(
-            has_text="Импортировать параметрыПросматриватьИмпорт").get_by_role("button").click()
-        page.get_by_role("button", name="OK").click()
-
-        page.goto('http://192.168.240.1/pages/preview',
-                wait_until='domcontentloaded')
-        page.wait_for_timeout(100)
-
-        page.locator("#volume").click()
-    
     #################### ЛОГИКА РАБОТЫ БЛОКА ####################
 
     while True:
 
         if keyboard.is_pressed('alt+4'):
 
-            config_3_channel()
+            config_terminal()
             
             while True:
                 
                 if keyboard.is_pressed('alt+4'):
-                    continue
-                break
-
-        elif keyboard.is_pressed('alt+5'):
-
-            config_5_channel()
-            
-            while True:
-                
-                if keyboard.is_pressed('alt+5'):
-                    continue
-                break
-
-        elif keyboard.is_pressed('alt+6'):
-
-            config_6_channel()
-            
-            while True:
-                
-                if keyboard.is_pressed('alt+6'):
                     continue
                 break
 
